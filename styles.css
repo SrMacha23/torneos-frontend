@@ -1,0 +1,189 @@
+/* ===== Estilos generales ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f0f2f5;
+    color: #1a1a1a;
+    line-height: 1.5;
+}
+
+/* ===== Encabezado ===== */
+header {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 24px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 28px;
+}
+
+header p {
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+/* ===== Contenedor principal ===== */
+main {
+    max-width: 900px;
+    margin: 24px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===== Tarjetas ===== */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-bottom: 16px;
+    color: #2575fc;
+}
+
+/* ===== Formulario ===== */
+.campo {
+    margin-bottom: 14px;
+}
+
+.campo label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.campo input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: #2575fc;
+}
+
+
+.botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+button {
+    background-color: #2575fc;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #1a5fd0;
+}
+
+button.secundario {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+button.secundario:hover {
+    background-color: #c8c8c8;
+}
+
+button.peligro {
+    background-color: #e74c3c;
+}
+
+button.peligro:hover {
+    background-color: #c0392b;
+}
+
+button.editar {
+    background-color: #f39c12;
+}
+
+button.editar:hover {
+    background-color: #d68910;
+}
+
+
+
+.listado-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+th {
+    background-color: #f7f8fa;
+    font-weight: 600;
+}
+
+td .acciones {
+    display: flex;
+    gap: 6px;
+}
+
+td button {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+
+.mensaje {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.mensaje.exito {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.mensaje.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.sin-datos {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+}
+
+
+.oculto {
+    display: none;
+}

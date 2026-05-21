@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Jugadores - Torneos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🎮 Gestión de Jugadores</h1>
+        <p>Sistema de Torneos de Videojuegos</p>
+    </header>
+
+    <main>
+        <!-- Mensaje de estado (éxito / error) -->
+        <div id="mensaje" class="mensaje oculto"></div>
+
+        <!-- Formulario para crear / editar -->
+        <section class="card">
+            <h2 id="formTitulo">Nuevo jugador</h2>
+            <form id="jugadorForm">
+                <input type="hidden" id="jugadorId">
+
+                <div class="campo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" required>
+                </div>
+
+                <div class="campo">
+                    <label for="nickname">Nickname</label>
+                    <input type="text" id="nickname" required>
+                </div>
+
+                <div class="campo">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="campo">
+                    <label for="videojuego">Videojuego</label>
+                    <input type="text" id="videojuego" required>
+                </div>
+
+                <div class="botones">
+                    <button type="submit" id="btnGuardar">Guardar</button>
+                    <button type="button" id="btnCancelar" class="secundario oculto">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Listado de jugadores -->
+        <section class="card">
+            <div class="listado-header">
+                <h2>Jugadores registrados</h2>
+                <button type="button" id="btnRecargar" class="secundario">↻ Recargar</button>
+            </div>
+
+            <table id="tablaJugadores">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Nickname</th>
+                        <th>Email</th>
+                        <th>Videojuego</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaBody">
+                    <!-- Las filas se generan con JavaScript -->
+                </tbody>
+            </table>
+
+            <p id="sinDatos" class="sin-datos oculto">No hay jugadores registrados.</p>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
