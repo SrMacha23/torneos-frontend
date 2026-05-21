@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugadores - Torneos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; color: #1a1a1a; }
+        header { background: linear-gradient(135deg, #6a11cb, #2575fc); color: #fff; padding: 24px; text-align: center; }
+        header h1 { font-size: 26px; }
+        main { max-width: 950px; margin: 24px auto; padding: 0 16px; }
+        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .top h2 { color: #2575fc; }
+        a.boton, button { background: #2575fc; color: #fff; border: none; padding: 10px 16px; border-radius: 8px;
+                          font-size: 14px; text-decoration: none; cursor: pointer; display: inline-block; }
+        a.boton:hover { background: #1a5fd0; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+        th { background: #f7f8fa; }
+        .acciones a { padding: 6px 12px; font-size: 13px; border-radius: 6px; text-decoration: none; color: #fff; margin-right: 6px; }
+        .editar { background: #f39c12; }
+        .editar:hover { background: #d68910; }
+        .eliminar { background: #e74c3c; }
+        .eliminar:hover { background: #c0392b; }
+        .vacio { text-align: center; color: #888; padding: 20px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎮 Gestión de Jugadores</h1>
+        <p>Sistema de Torneos de Videojuegos</p>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="top">
+                <h2>Jugadores registrados</h2>
+                <a class="boton" th:href="@{/jugadores/nuevo}">+ Nuevo jugador</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Nickname</th>
+                        <th>Email</th>
+                        <th>Videojuego</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="jugador : ${jugadores}">
+                        <td th:text="${jugador.id}">1</td>
+                        <td th:text="${jugador.nombre}">Nombre</td>
+                        <td th:text="${jugador.nickname}">Nick</td>
+                        <td th:text="${jugador.email}">email</td>
+                        <td th:text="${jugador.videojuego}">Juego</td>
+                        <td class="acciones">
+                            <a class="editar" th:href="@{/jugadores/editar/{id}(id=${jugador.id})}">Editar</a>
+                            <a class="eliminar" th:href="@{/jugadores/eliminar/{id}(id=${jugador.id})}"
+                               onclick="return confirm('¿Seguro que querés eliminar este jugador?');">Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="vacio" th:if="${#lists.isEmpty(jugadores)}">No hay jugadores registrados.</p>
+        </div>
+    </main>
+</body>
+</html>
