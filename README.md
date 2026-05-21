@@ -1,32 +1,45 @@
 # Frontend - Sistema de Gestión de Torneos de Videojuegos
 
-Interfaz web que consume la api reset del backend para gestionar jugadores.
+Aplicación web **independiente** del backend, construida con **Spring Boot + Thymeleaf**,
+que consume la API REST del backend (`torneos-videojuegos`) mediante **RestTemplate**.
 
 ## Integrantes
 - Luis Samuel Machado Estrada
 - Miguelangel Gaviria Hijuelos
 
 ## Tecnologías
-- HTML5
-- CSS3
+- Java 17
+- Spring Boot (Web MVC)
+- Thymeleaf (plantillas HTML renderizadas en el servidor)
+- RestTemplate (cliente HTTP para consumir el backend)
+- Maven
 
-## Descripción
-Aplicación web a parte del backend. Resuelve un  CRUDL completo
-(Crear, Leer, Actualizar, Eliminar y Listar) de jugadores, consumiendo la
-API REST del backend (proyecto `torneos-videojuegos`).
+## Arquitectura
+El navegador habla solo con el frontend; el frontend consume la API del backend
+desde el servidor con RestTemplate. Así se evita el problema de CORS.
 
-## Operaciones implementadas
-- **Listar** todos los jugadores (GET /api/jugadores)
-- **Consultar** un jugador por ID (GET /api/jugadores/{id})
-- **Crear** un nuevo jugador (POST /api/jugadores)
-- **Actualizar** un jugador existente (PUT /api/jugadores/{id})
-- **Eliminar** un jugador (DELETE /api/jugadores/{id})
+## Estructura
+src/main/java/com/torneo/frontend/
+├── TorneosFrontendApplication.java     Clase principal
+├── config/AppRestTemplateConfig.java   Define el bean RestTemplate
+├── dto/JugadorDto.java                 Datos del jugador
+├── client/JugadorServiceClient.java    Consume la API (CRUDL) con RestTemplate
+└── controller/
+├── JugadorViewController.java       Rutas web + vistas Thymeleaf
+└── HomeController.java              Redirige "/" a "/jugadores"
+src/main/resources/
+├── templates/jugadores.html            Listado (L) + acciones
+├── templates/formulario.html           Crear (C) / Editar (U)
+└── application.properties              Puerto 8081 + URL del backend
 
-## Requisitos previos
-- Tener el backend `torneos-videojuegos` corriendo en `http://localhost:8080`
-- Un navegador web moderno
+## Operaciones (CRUDL)
+- **Listar** todos los jugadores
+- **Consultar** un jugador por ID
+- **Crear** un nuevo jugador
+- **Actualizar** un jugador existente
+- **Eliminar** un jugador
 
 ## Cómo ejecutar
 1. Asegurarse de que el backend esté corriendo en el puerto 8080.
-2. Abrir el archivo `index.html` en el navegador
-   (o servirlo con una extensión como Live Server de VS Code).
+2. Correr el FrontEnd
+3. Abrir en el navegador: `http://localhost:8081/jugadores`
