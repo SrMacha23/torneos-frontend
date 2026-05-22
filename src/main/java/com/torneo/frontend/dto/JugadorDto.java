@@ -1,7 +1,5 @@
 package com.torneo.frontend.dto;
 
-// DTO (Data Transfer Object): representa los datos de un jugador
-// tal como viajan entre el frontend y la API del backend.
 public class JugadorDto {
 
     private Integer id;
@@ -9,6 +7,7 @@ public class JugadorDto {
     private String nickname;
     private String email;
     private String videojuego;
+    private String torneo;
 
     public JugadorDto() {}
 
@@ -26,4 +25,7 @@ public class JugadorDto {
 
     public String getVideojuego() { return videojuego; }
     public void setVideojuego(String videojuego) { this.videojuego = videojuego; }
+
+    public String getTorneo() { return torneo; }
+    public void setTorneo(String torneo) { this.torneo = torneo; }
 }

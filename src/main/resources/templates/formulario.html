@@ -58,6 +58,16 @@
                     <label for="videojuego">Videojuego</label>
                     <input type="text" id="videojuego" th:field="*{videojuego}" required>
                 </div>
+                
+                <div class="campo">
+                    <label for="torneo">Torneo</label>
+                    <select id="torneo" th:field="*{torneo}"
+                            style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:15px;">
+                        <option value="">-- Sin torneo --</option>
+                        <option th:each="t : ${torneos}" th:value="${t.nombre}" th:text="${t.nombre}"></option>
+                    </select>
+                </div>
+
 
                 <div class="botones">
                     <button type="submit">Guardar</button>

@@ -30,7 +30,11 @@
 <body>
     <header>
         <h1>🎮 Gestión de Jugadores</h1>
-        <p>Sistema de Torneos de Videojuegos</p>
+                <nav style="margin-top:8px;">
+            <a href="/jugadores" style="color:#fff;margin:0 10px;text-decoration:none;font-weight:600;">👤 Jugadores</a>
+            <a href="/torneos" style="color:#fff;margin:0 10px;text-decoration:none;font-weight:600;">🏆 Torneos</a>
+        </nav>
+
     </header>
 
     <main>
@@ -48,6 +52,7 @@
                         <th>Nickname</th>
                         <th>Email</th>
                         <th>Videojuego</th>
+                        <th>Torneo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -58,6 +63,7 @@
                         <td th:text="${jugador.nickname}">Nick</td>
                         <td th:text="${jugador.email}">email</td>
                         <td th:text="${jugador.videojuego}">Juego</td>
+                        <td th:text="${jugador.torneo}">Torneo</td>
                         <td class="acciones">
                             <a class="editar" th:href="@{/jugadores/editar/{id}(id=${jugador.id})}">Editar</a>
                             <a class="eliminar" th:href="@{/jugadores/eliminar/{id}(id=${jugador.id})}"
