@@ -6,11 +6,11 @@ import com.torneo.frontend.dto.JugadorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jugadores")
@@ -23,8 +23,22 @@ public class JugadorViewController {
     private TorneoServiceClient torneoServicio;
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("jugadores", servicio.listar());
+    public String listar(@RequestParam(required = false) String buscar, Model model) {
+        List<JugadorDto> jugadores = servicio.listar();
+
+        if (buscar != null && !buscar.trim().isEmpty()) {
+            String filtro = buscar.toLowerCase();
+            jugadores = jugadores.stream()
+                .filter(j ->
+                    (j.getNombre()     != null && j.getNombre().toLowerCase().contains(filtro)) ||
+                    (j.getNickname()   != null && j.getNickname().toLowerCase().contains(filtro)) ||
+                    (j.getVideojuego() != null && j.getVideojuego().toLowerCase().contains(filtro))
+                )
+                .collect(Collectors.toList());
+        }
+
+        model.addAttribute("jugadores", jugadores);
+        model.addAttribute("buscar", buscar);
         return "jugadores";
     }
 
@@ -45,18 +59,29 @@ public class JugadorViewController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute JugadorDto jugador) {
-        if (jugador.getId() != null) {
-            servicio.actualizar(jugador.getId(), jugador);
-        } else {
-            servicio.crear(jugador);
+    public String guardar(@ModelAttribute JugadorDto jugador, RedirectAttributes attrs) {
+        try {
+            if (jugador.getId() != null) {
+                servicio.actualizar(jugador.getId(), jugador);
+                attrs.addFlashAttribute("mensaje", "✅ Jugador actualizado correctamente.");
+            } else {
+                servicio.crear(jugador);
+                attrs.addFlashAttribute("mensaje", "✅ Jugador creado correctamente.");
+            }
+        } catch (Exception e) {
+            attrs.addFlashAttribute("error", "❌ Ocurrió un error al guardar el jugador.");
         }
         return "redirect:/jugadores";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable int id) {
-        servicio.eliminar(id);
+    public String eliminar(@PathVariable int id, RedirectAttributes attrs) {
+        try {
+            servicio.eliminar(id);
+            attrs.addFlashAttribute("mensaje", "✅ Jugador eliminado correctamente.");
+        } catch (Exception e) {
+            attrs.addFlashAttribute("error", "❌ No se pudo eliminar el jugador.");
+        }
         return "redirect:/jugadores";
     }
 }

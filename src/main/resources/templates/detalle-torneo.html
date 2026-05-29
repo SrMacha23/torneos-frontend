@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Jugadores de ' + ${torneo.nombre}">Detalle Torneo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; color: #1a1a1a; }
+        header { background: linear-gradient(135deg, #6a11cb, #2575fc); color: #fff; padding: 24px; text-align: center; }
+        header h1 { font-size: 26px; }
+        nav { margin-top: 8px; }
+        nav a { color: #fff; margin: 0 10px; text-decoration: none; font-weight: 600; opacity: .85; }
+        nav a:hover { opacity: 1; text-decoration: underline; }
+        main { max-width: 950px; margin: 24px auto; padding: 0 16px; }
+        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); margin-bottom: 20px; }
+        .card h2 { color: #2575fc; margin-bottom: 4px; }
+        .card .subtitulo { color: #666; font-size: 14px; margin-bottom: 16px; }
+        .info-torneo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        .info-item { background: #f7f8fa; border-radius: 8px; padding: 12px 16px; }
+        .info-item .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+        .info-item .valor { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+        th { background: #f7f8fa; }
+        .vacio { text-align: center; color: #888; padding: 30px; }
+        a.volver { display: inline-block; background: #6a11cb; color: #fff; padding: 10px 16px;
+                   border-radius: 8px; text-decoration: none; font-size: 14px; margin-bottom: 16px; }
+        a.volver:hover { background: #5a0db0; }
+        .badge-count { background: #e8f0fe; color: #2575fc; padding: 3px 10px; border-radius: 20px;
+                       font-size: 13px; font-weight: 600; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎮 Sistema de Torneos de Videojuegos</h1>
+        <nav>
+            <a href="/dashboard">🏠 Inicio</a>
+            <a href="/jugadores">👤 Jugadores</a>
+            <a href="/torneos">🏆 Torneos</a>
+        </nav>
+    </header>
+
+    <main>
+        <a class="volver" href="/torneos">← Volver a torneos</a>
+
+        <!-- Info del torneo -->
+        <div class="card">
+            <h2 th:text="${torneo.nombre}">Nombre del torneo</h2>
+            <p class="subtitulo">Detalle del torneo</p>
+            <div class="info-torneo">
+                <div class="info-item">
+                    <div class="label">🎮 Videojuego</div>
+                    <div class="valor" th:text="${torneo.videojuego}">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">📅 Fecha</div>
+                    <div class="valor" th:text="${torneo.fecha}">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">📝 Descripción</div>
+                    <div class="valor" th:text="${torneo.descripcion != null and !torneo.descripcion.isEmpty()} ? ${torneo.descripcion} : '—'">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jugadores inscritos -->
+        <div class="card">
+            <h2>
+                👥 Jugadores inscritos
+                <span class="badge-count" th:text="${#lists.size(jugadores)}">0</span>
+            </h2>
+            <p class="subtitulo">Jugadores que tienen este torneo asignado</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Nickname</th>
+                        <th>Email</th>
+                        <th>Videojuego</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="jugador : ${jugadores}">
+                        <td th:text="${jugador.id}">1</td>
+                        <td th:text="${jugador.nombre}">Nombre</td>
+                        <td th:text="${jugador.nickname}">Nick</td>
+                        <td th:text="${jugador.email}">email</td>
+                        <td th:text="${jugador.videojuego}">Juego</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="vacio" th:if="${#lists.isEmpty(jugadores)}">
+                No hay jugadores inscritos en este torneo aún.
+            </p>
+        </div>
+    </main>
+</body>
+</html>

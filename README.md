@@ -1,7 +1,7 @@
 # Frontend - Sistema de Gestión de Torneos de Videojuegos
 
-Aplicación web **independiente** del backend, construida con **Spring Boot + Thymeleaf**,
-que consume la API REST del backend (`torneos-videojuegos`) mediante **RestTemplate**.
+Aplicación web independiente del backend, construida con Spring Boot + Thymeleaf,
+que consume la API REST del backend (`torneos-videojuegos`) mediante RestTemplate.
 
 ## Integrantes
 - Luis Samuel Machado Estrada
@@ -18,19 +18,6 @@ que consume la API REST del backend (`torneos-videojuegos`) mediante **RestTempl
 El navegador habla solo con el frontend; el frontend consume la API del backend
 desde el servidor con RestTemplate. Así se evita el problema de CORS.
 
-## Estructura
-src/main/java/com/torneo/frontend/
-├── TorneosFrontendApplication.java     Clase principal
-├── config/AppRestTemplateConfig.java   Define el bean RestTemplate
-├── dto/JugadorDto.java                 Datos del jugador
-├── client/JugadorServiceClient.java    Consume la API (CRUDL) con RestTemplate
-└── controller/
-├── JugadorViewController.java       Rutas web + vistas Thymeleaf
-└── HomeController.java              Redirige "/" a "/jugadores"
-src/main/resources/
-├── templates/jugadores.html            Listado (L) + acciones
-├── templates/formulario.html           Crear (C) / Editar (U)
-└── application.properties              Puerto 8081 + URL del backend
 
 ## Operaciones (CRUDL)
 - **Listar** todos los jugadores

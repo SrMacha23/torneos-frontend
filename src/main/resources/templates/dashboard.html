@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Torneos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; color: #1a1a1a; }
+        header { background: linear-gradient(135deg, #6a11cb, #2575fc); color: #fff; padding: 24px; text-align: center; }
+        header h1 { font-size: 28px; margin-bottom: 4px; }
+        header p { font-size: 14px; opacity: 0.85; margin-bottom: 8px; }
+        nav a { color: #fff; margin: 0 10px; text-decoration: none; font-weight: 600; opacity: .85; }
+        nav a:hover { opacity: 1; text-decoration: underline; }
+        main { max-width: 950px; margin: 28px auto; padding: 0 16px; }
+
+        /* Tarjetas de estadísticas */
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: #fff; border-radius: 12px; padding: 24px 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08);
+                     text-align: center; border-top: 4px solid #2575fc; }
+        .stat-card.torneos { border-top-color: #6a11cb; }
+        .stat-card.juegos  { border-top-color: #27ae60; }
+        .stat-card .numero { font-size: 42px; font-weight: 700; color: #2575fc; }
+        .stat-card.torneos .numero { color: #6a11cb; }
+        .stat-card.juegos  .numero { color: #27ae60; }
+        .stat-card .label { font-size: 14px; color: #666; margin-top: 4px; }
+        .stat-card .icono { font-size: 28px; margin-bottom: 8px; }
+
+        /* Sección de accesos rápidos */
+        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); margin-bottom: 20px; }
+        .card h2 { color: #2575fc; margin-bottom: 16px; font-size: 18px; }
+        .accesos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .acceso-btn { display: block; background: linear-gradient(135deg, #6a11cb, #2575fc); color: #fff;
+                      text-decoration: none; padding: 18px 20px; border-radius: 10px; font-size: 15px;
+                      font-weight: 600; text-align: center; transition: opacity .2s; }
+        .acceso-btn:hover { opacity: .88; }
+        .acceso-btn span { display: block; font-size: 24px; margin-bottom: 6px; }
+
+        /* Tabla de últimos torneos */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+        th { background: #f7f8fa; }
+        .badge { background: #e8f0fe; color: #2575fc; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎮 Sistema de Torneos de Videojuegos</h1>
+        <p>Panel de administración</p>
+        <nav>
+            <a href="/dashboard">🏠 Inicio</a>
+            <a href="/jugadores">👤 Jugadores</a>
+            <a href="/torneos">🏆 Torneos</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Estadísticas -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="icono">👤</div>
+                <div class="numero" th:text="${totalJugadores}">0</div>
+                <div class="label">Jugadores registrados</div>
+            </div>
+            <div class="stat-card torneos">
+                <div class="icono">🏆</div>
+                <div class="numero" th:text="${totalTorneos}">0</div>
+                <div class="label">Torneos creados</div>
+            </div>
+            <div class="stat-card juegos">
+                <div class="icono">🎮</div>
+                <div class="numero" th:text="${totalVideojuegos}">0</div>
+                <div class="label">Videojuegos distintos</div>
+            </div>
+        </div>
+
+        <!-- Accesos rápidos -->
+        <div class="card">
+            <h2>⚡ Accesos rápidos</h2>
+            <div class="accesos">
+                <a class="acceso-btn" href="/jugadores/nuevo">
+                    <span>👤</span>Registrar nuevo jugador
+                </a>
+                <a class="acceso-btn" href="/torneos/nuevo">
+                    <span>🏆</span>Crear nuevo torneo
+                </a>
+                <a class="acceso-btn" href="/jugadores">
+                    <span>📋</span>Ver todos los jugadores
+                </a>
+                <a class="acceso-btn" href="/torneos">
+                    <span>📋</span>Ver todos los torneos
+                </a>
+            </div>
+        </div>
+
+        <!-- Últimos torneos -->
+        <div class="card">
+            <h2>🏆 Torneos registrados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Videojuego</th>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="torneo : ${torneos}">
+                        <td th:text="${torneo.nombre}">-</td>
+                        <td><span class="badge" th:text="${torneo.videojuego}">-</span></td>
+                        <td th:text="${torneo.fecha}">-</td>
+                        <td th:text="${torneo.descripcion}">-</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="text-align:center;color:#888;padding:16px;" th:if="${#lists.isEmpty(torneos)}">
+                No hay torneos registrados aún.
+            </p>
+        </div>
+    </main>
+</body>
+</html>
